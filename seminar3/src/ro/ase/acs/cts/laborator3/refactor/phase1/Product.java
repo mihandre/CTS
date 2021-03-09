@@ -36,44 +36,11 @@ public class Product {
 	    }
 		
 		float finalPrice = 0;
-	    float fidelityDiscount = getFidelityDiscount(accountAge);
+	    float fidelityDiscount = (productType == ProductType.NEW) ? 0 : getFidelityDiscount(accountAge);
 	   
-	    switch(productType) {
-		case NEW:
-			finalPrice = getFinalPrice(initialPrice, fidelityDiscount, ProductType.NEW)
-			break;
-		case DISCOUNTED:
-			discountValue = getDiscountValue(initialPrice, ProductType.DISCOUNTED.getDiscount());
-			finalPrice = getPriceWithDiscountAndFidelity(initialPrice, discountValue, fidelityDiscount);
-			break;
-		case LIMITED_STOCK:
-			discountValue = getDiscountValue(initialPrice, ProductType.LIMITED_STOCK.getDiscount());
-			finalPrice = getPriceWithDiscountAndFidelity(initialPrice, discountValue, fidelityDiscount);
-			break;
-		case LEGACY:
-			discountValue = getDiscountValue(initialPrice, ProductType.LEGACY.getDiscount());
-			finalPrice = getPriceWithDiscountAndFidelity(initialPrice, discountValue, fidelityDiscount);
-			break;
-		default:
-			throw new UnsupportedOperationException("The enum type is not covered");
-	    }
+	    finalPrice = getFinalPrice(initialPrice, fidelityDiscount, ProductType.NEW);
 	    
-	    if (productType == ProductType.NEW)
-	    {
-	      finalPrice = initialPrice;
-	    }
-	    else if (productType == ProductType.DISCOUNTED)
-	    {
-	      finalPrice = (initialPrice - (productType.getDiscount() * initialPrice)) - fidelityDiscount * (initialPrice - (productType.getDiscount() * initialPrice));
-	    }
-	    else if (productType == ProductType.LIMITED_STOCK)
-	    {
-	    	finalPrice = (initialPrice - (productType.getDiscount() * initialPrice)) - fidelityDiscount * (initialPrice - (productType.getDiscount() * initialPrice));
-	    }
-	    else if (productType == ProductType.LEGACY)
-	    {
-	    	finalPrice = (initialPrice - (productType.getDiscount() * initialPrice)) - fidelityDiscount * (initialPrice - (productType.getDiscount() * initialPrice));
-	    }
 	    return finalPrice;
 	  }
+	    
 }
