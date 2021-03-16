@@ -8,3 +8,13 @@ Phase 1 - Naming conventions
 - rename valoare
 
 -remove hard-coded values aka "magic numbers"
+
+-add validations for input values
+
+Phase 2 - KISS & Single Responsibility
+-simplify the expressions
+-a function should do only one thing
+
+Phase 3 - Single Responsibility & Dependency Inversion
+- the static final value may change when the marketing strategy will change
+- getFidelityDiscount() may change when the marketing strategy will change
