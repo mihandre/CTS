@@ -2,45 +2,85 @@ package ro.ase.acs.cts.laborator3.refactor.phase1;
 
 import ro.ase.acs.cts.laborator3.refactor.exceptions.InvalidAgeException;
 import ro.ase.acs.cts.laborator3.refactor.exceptions.InvalidPriceException;
+import ro.ase.acs.cts.laborator3.refactor.phase3.services.MarketingServiceInterface;
+import ro.ase.acs.cts.laborator3.refactor.phase3.services.ValidatorServiceInterface;
+import ro.ase.acs.cts.laborator3.refactor.phase3.test.TestProduct;
 
 public class Product {
 	
-	public static final int MAX_AGE_ACCOUNT = 10;
-	public static final float MAX_FIDELITY_DISCOUNT = 0.15f;
+	MarketingServiceInterface mkService = null;
+	ValidatorServiceInterface validator = null;
 	
-	public static float getDiscountValue(float price, float discount) {
+	public Product(MarketingServiceInterface mkService, 
+			ValidatorServiceInterface validator) {
+		/*
+		 * if(mkService == null) { throw new NullPointerException(); } this.mkService =
+		 * mkService;
+		 */
+		this.setMarketingService(mkService);
+		this.validator = validator;
+	}
+	
+	
+	//version 4 - use the global service collection
+	public Product() {
+		//dependency injection based on the global services collection
+		for(Object service : TestProduct.services) {
+			if(service instanceof MarketingServiceInterface) {
+				this.setMarketingService((MarketingServiceInterface)service);
+			}
+			if(service instanceof ValidatorServiceInterface) {
+				this.validator = (ValidatorServiceInterface) service;
+			}
+		}
+		
+		if(this.mkService == null) {
+			throw new UnsupportedOperationException();
+		}
+		if(this.validator == null) {
+			throw new UnsupportedOperationException();
+		}
+	}
+	
+	//optional - based on design specs
+	public void setMarketingService(MarketingServiceInterface mkService) {
+		if(mkService == null) {
+			throw new NullPointerException();
+		}
+		this.mkService = mkService;
+	}
+	
+	private static float getDiscountValue(float price, float discount) {
 		return discount * price;
 	}
 	
-	private static float getPriceWithDiscountAndFidelity(float price, float discountValue, float fidelityDiscount) {
+	private static float getPriceWithDiscountAndFidelity(
+			float price, float discountValue, float fidelityDiscount) {
+		
 		return (price - discountValue) * (1 - fidelityDiscount);
 	}
 	
-	private static float getFidelityDiscount(int accountAge) {
-		return (accountAge > 10) ? (float)15/100 : (float)accountAge/100;
-	}
 	
-	private static float getFinalPrice(float price, float fidelityDiscount, ProductType type) {
+	private static float getFinalPrice(
+			float price, float fidelityDiscount, ProductType type) {
 		float discountValue = getDiscountValue(price, type.getDiscount());
-		float finalPrice = getPriceWithDiscountAndFidelity(price, discountValue, fidelityDiscount);
-		return finalPrice;
+    	float finalPrice = getPriceWithDiscountAndFidelity(price, discountValue, fidelityDiscount);
+    	return finalPrice;
 	}
 	
-	public float computePriceWithDiscount(ProductType productType, float initialPrice, int accountAge) throws InvalidAgeException, InvalidPriceException
+	
+	public float computePriceWithDiscount(ProductType productType, float price, int accountAge) 
+			throws InvalidPriceException, InvalidAgeException
 	  {
-	    if(initialPrice<=0) {
-	    	throw new InvalidPriceException();
-	    }
-	    if(accountAge <0) {
-	    	throw new InvalidAgeException();
-	    }
 		
-		float finalPrice = 0;
-	    float fidelityDiscount = (productType == ProductType.NEW) ? 0 : getFidelityDiscount(accountAge);
-	   
-	    finalPrice = getFinalPrice(initialPrice, fidelityDiscount, ProductType.NEW);
+		validator.validatePrice(price);
+		validator.validateAge(accountAge);
+		
+	    float fidelityDiscount = 
+	    		(productType == ProductType.NEW) ? 0 : mkService.getFidelityDiscount(accountAge);
 	    
+	    float finalPrice = getFinalPrice(price,fidelityDiscount, productType);
+    	    
 	    return finalPrice;
 	  }
-	    
 }
