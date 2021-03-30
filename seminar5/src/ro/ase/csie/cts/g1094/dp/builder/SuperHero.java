@@ -78,7 +78,7 @@ public class SuperHero {
 		
 		//don't forget to provide
 		public SuperHero build() {
-			return this;
+			return superHero;
 		}
 	}
 	
