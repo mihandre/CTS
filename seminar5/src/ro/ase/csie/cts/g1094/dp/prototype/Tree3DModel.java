@@ -32,7 +32,7 @@ public class Tree3DModel {
 	}
 
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		Tree3DModel copy = new Tree3DModel();
 		copy.color = this.color;
 		copy.height = this.height;
