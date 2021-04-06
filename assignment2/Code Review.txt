@@ -1,0 +1,14 @@
+Phase 1
+-rename loan_value and account_Type to match mixedCamelCase
+-refactor line 6 to ENUM
+-"double loan()" both prints to console and returns a value; should create two separate functions "void printLoan()" and "double getLoan()"
+-same as above for "double getRate()"
+-implement interface for "double getMonthlyRate()"
+-rename "void setValue()" to "void setLoanValue()", rename parameter
+-"void setValue()" should throw specific Exception to facilitate testing and debugging
+-change "to_string" to "toString" - common name
+-"void print()" does nothing useful; should at least delete the unused "int vb" variable
+-
+
+Phase 2
+
