@@ -31,4 +31,16 @@ public class DonaldDuck implements DisneyActions {
 		
 	}
 
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return this.name;
+	}
+
+	@Override
+	public int getPower() {
+		// TODO Auto-generated method stub
+		return this.powerLevel;
+	}
+
 }
