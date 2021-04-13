@@ -6,9 +6,21 @@ Phase 1
 -implement interface for "double getMonthlyRate()"
 -rename "void setValue()" to "void setLoanValue()", rename parameter
 -"void setValue()" should throw specific Exception to facilitate testing and debugging
--change "to_string" to "toString" - common name
+-change "to_string" to "toString" and use Override
 -"void print()" does nothing useful; should at least delete the unused "int vb" variable
--
+-rename "calculate" to "calculateYearlyFee"
+-"int temp" variable unused
+-should create static variable to store broker's fee
+-constructor uses same code snippet as "setLoanValue()"; use that instead
 
 Phase 2
+calculateYearlyFee:
+-use accounts[i] instead of making a copy so we don't waste space
+-create another constructor with brokerFee parameter in case it's different than the default
+-refactor calculation formula
+-move formula into new function "calculateFeeFromAccount" and use that instead
+-move "calculateYearlyFee" function into new Broker class, since it is specific to brokers instead of accounts
+
+-implement validator service for loanValue and rate
+-add setter for rate to use validator
 

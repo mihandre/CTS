@@ -1,4 +1,4 @@
-package assignment2;
+package assignment2.interfaces;
 
 public interface AccountInterface {
 	double getMonthlyRate();
