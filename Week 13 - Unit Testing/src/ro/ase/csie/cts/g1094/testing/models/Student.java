@@ -59,7 +59,7 @@ public class Student {
 	}
 
 	public float getGradesAverage() {
-		int sum = 0;
+		float sum = 0;
 		for (int grade : this.grades) {
 			sum += grade;
 		}

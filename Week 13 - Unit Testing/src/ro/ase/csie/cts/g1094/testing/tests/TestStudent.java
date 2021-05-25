@@ -92,4 +92,35 @@ public class TestStudent {
 		student.setAge(newAge);
 	}
 	
+	@Test
+	public void testGetGradesAverageAscendingOrder() throws WrongGradesException {
+		ArrayList<Integer> sortedGrades = new ArrayList<>();
+		sortedGrades.add(7);
+		sortedGrades.add(8);
+		sortedGrades.add(9);
+		sortedGrades.add(10);
+		student.setGrades(sortedGrades);
+		
+		float expectedAverage = 8.5f;
+		float computedAverage = student.getGradesAverage();
+		
+		assertEquals("Testing with an ascending sorted set of grades",
+				expectedAverage, computedAverage, 0);
+	}
+	
+	@Test
+	public void testGetGradesAverageCardinalityZero() throws WrongGradesException {
+		ArrayList<Integer> gradesArrayList = new ArrayList<>();
+		int theGrade = 10;
+		gradesArrayList.add(theGrade);
+		
+		student.setGrades(gradesArrayList);
+		
+		float expectedAverage = theGrade;
+		float computedAverage = student.getGradesAverage();
+		
+		assertEquals("Testing with one grade",expectedAverage, computedAverage,0);
+		
+	}
+	
 }
