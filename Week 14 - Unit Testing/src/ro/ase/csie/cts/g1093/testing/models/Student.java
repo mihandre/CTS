@@ -47,8 +47,8 @@ public class Student {
 	}
 
 	public void setGrades(ArrayList<Integer> grades) throws WrongGradesException {
-//		this.grades = (ArrayList<Integer>) grades.clone();
 		this.grades = (ArrayList<Integer>) grades.clone();
+		
 	}
 
 	public int getGrade(int index) {
